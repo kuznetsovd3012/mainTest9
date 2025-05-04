@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Інший документ</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <h1>Це інший HTML-документ</h1>
+  <p>Тут ви можете продовжити вивчення теми або ознайомитися з додатковими матеріалами.</p>
+
+  <!-- Форма підписки -->
+  <section class="feedback-block">
+    <h3>Підпишись на оновлення</h3>
+    <form id="subscribeForm">
+      <label>
+        Email для підписки:
+        <input type="email" name="subscriberEmail" placeholder="твій@пошта.ua" required>
+      </label>
+      <button type="submit" class="btn main">Підписатися</button>
+    </form>
+    <!-- Статус повідомлення виводить forms.js -->
+  </section>
+
+  <!-- Форма створення картки -->
+  <section class="feedback-block">
+    <h3>Створити картку користувача</h3>
+    <form id="cardForm">
+      <label>Ім’я:
+        <input type="text" name="name" required>
+      </label>
+      <label>Електронна пошта:
+        <input type="email" name="email" required>
+      </label>
+      <p>Стать:</p>
+      <label><input type="radio" name="gender" value="Чоловік" required> Чоловік</label>
+      <label><input type="radio" name="gender" value="Жінка"> Жінка</label>
+      <p>Хобі:</p>
+      <label><input type="checkbox" name="hobby" value="Музика"> Музика</label>
+      <label><input type="checkbox" name="hobby" value="Спорт"> Спорт</label>
+      <label><input type="checkbox" name="hobby" value="Читання"> Читання</label>
+      <label>Короткий опис:
+        <textarea name="description" rows="3" cols="30"></textarea>
+      </label>
+      <button type="submit" class="btn secondary">Створити картку</button>
+    </form>
+  </section>
+
+  <!-- Контейнер для карток -->
+  <div id="cardsContainer"></div>
+
+  <div class="button-group">
+    <a href="index.html" class="btn main">На головну</a>
+    <a href="another-page.html" class="btn secondary">Оновити цю сторінку</a>
+    <a href="https://github.com/kuznetsovd3012/mainTest7" class="btn github" target="_blank">GitHub</a>
+  </div>
+
+  <footer>
+    &copy; 2025 Проєкт з HTML. Усі права захищено.
+  </footer>
+
+  <script src="forms.js" defer></script>
+  <script>
+    // Додатковий скрипт для створення карток
+    document.getElementById('cardForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const data = new FormData(e.target);
+      const name = data.get('name');
+      const email = data.get('email');
+      const gender = data.get('gender');
+      const hobbies = data.getAll('hobby');
+      const desc = data.get('description') || '—';
+
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <h3>${name}</h3>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Стать:</strong> ${gender}</p>
+        <p><strong>Хобі:</strong> ${hobbies.length ? hobbies.join(', ') : '—'}</p>
+        <p><strong>Опис:</strong> ${desc}</p>
+      `;
+      document.getElementById('cardsContainer').appendChild(card);
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>
